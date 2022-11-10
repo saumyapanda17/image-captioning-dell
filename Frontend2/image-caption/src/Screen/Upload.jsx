@@ -10,6 +10,7 @@ import './Upload.css'
 const Upload = () => {
     const [files, setFile] = useState(null);
     const [result, setResult] = useState();
+    const [result2, setResult2] = useState();
     const [load, setLoad] = useState(false);
     const [play, setPlay] = useState(false);
     const [playText, setPlayText] = useState(null);
@@ -72,6 +73,7 @@ const Upload = () => {
             const response = await axios.post("http://localhost:5000/uploader", data)
             console.log(response?.data)
             setResult(response?.data?.txt)
+            setResult2(response?.data?.data)
             setLoad(false);
             if (files.length == 1) {
                 setImageUrl(URL.createObjectURL(files[0]))
@@ -93,6 +95,7 @@ const Upload = () => {
                         <input type="file"
                             onChange={(e) => {
                                 setResult(null)
+                                setResult2(null)
                                 setFile(e.target.files)
                             }}
                             multiple />
@@ -126,7 +129,7 @@ const Upload = () => {
                                         className="image image-fluid" />
                                 </div>
                                 <br />
-                                <h6 style={{ textAlign: "center" }}>{result[0]}</h6>
+                                <h6 style={{ textAlign: "center" }}>{result2[0]}</h6>
                             </>
                         }
                         <div className='resultDiv'>
