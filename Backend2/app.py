@@ -90,19 +90,21 @@ def uploader():
     global model, resnet, vocab, inv_vocab
     data = ""
     count =0
+    textData =[]
     finalData = []
     print(request)
     if request.method == "POST":
         files = request.files.getlist("file")
         for file in files:
-            
+            filename2 = file.filename
+            print(filename2)
             count= count+1
-            filename = f'file{count}.jpg' 
+            filename3 = f'file{count}.jpg' 
             print("-"*50)
-            print(filename)
+            print(filename3)
             file.save(os.path.join(UPLOAD_FOLDER, "file"+str(count)+".jpg"))
             
-            image = cv2.imread(f'static/upload/{filename}')
+            image = cv2.imread(f'static/upload/{filename3}')
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.resize(image, (224,224))
             image = np.reshape(image, (1,224,224,3))
@@ -123,11 +125,12 @@ def uploader():
                text_in.append(sampled_word)
                
             print("finalData")
-            print(final)       
+            print(final)
+            txtData = file.filename + '        ' + final  
+            textData.append(txtData)
             finalData.append(final)
-            print(finalData)
             
-    return {'data': finalData , 'dataCount': count ,'img':data}
+    return {'data': finalData , 'dataCount': count ,'txt': textData}
 
 
 if __name__ == "__main__":

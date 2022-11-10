@@ -71,7 +71,7 @@ const Upload = () => {
             console.log(data)
             const response = await axios.post("http://localhost:5000/uploader", data)
             console.log(response?.data)
-            setResult(response?.data?.data)
+            setResult(response?.data?.txt)
             setLoad(false);
             if (files.length == 1) {
                 setImageUrl(URL.createObjectURL(files[0]))
